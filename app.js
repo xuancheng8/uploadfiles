@@ -16,7 +16,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 
 // Mongo URI
-const mongoURI = 'mongodb://brad:brad@ds257838.mlab.com:57838/mongouploads';
+const mongoURI = 'mongodb://localhost:27017/upload';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
@@ -139,12 +139,15 @@ app.get('/image/:filename', (req, res) => {
 // @route DELETE /files/:id
 // @desc  Delete file
 app.delete('/files/:id', (req, res) => {
+  
+  
   gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
     if (err) {
       return res.status(404).json({ err: err });
     }
-
+    //console.log(req.params.id);
     res.redirect('/');
+    
   });
 });
 
